@@ -6,9 +6,8 @@
 ### Numpy, Matplotlib, cx_freeze
 
 ## Para ejecutar
-Instalar 
-pip install -r requeriments.txt
-python nuevo.py
+## Instalar 
+### pip install -r requeriments.txt && python nuevo.py
 
 ## Para hacer el ejecutable ".exe"
-py setup.py build
+### py setup.py build
