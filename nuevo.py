@@ -23,19 +23,27 @@ class Proceso(object):
 	def __init__(self, cPrioridad, ultimoProceso):
 		self.nombre = str(input("Ingrese Nombre Del Proceso: "))
 		while cPrioridad.min > self.prioridad or cPrioridad.max < self.prioridad:
-			self.prioridad = int(input("\tIngrese La Prioridad Del Proceso %s (%s - %s):  " % (self.nombre.title(), cPrioridad.min, cPrioridad.max)))	
+			self.prioridad = int_input(self.prioridad, "\tIngrese La Prioridad Del Proceso %s (%s - %s):  " % (self.nombre.title(), cPrioridad.min, cPrioridad.max))	
 		while ultimoProceso >= self.tiempoLlegada:
-			self.tiempoLlegada = int(input("\tIngrese Instante De LLegada Del Proceso %s: " % (self.nombre.title())))
-		self.tiempoEjecucion = int(input("\tIngrese Tiempo De Ejecucion Del Proceso %s: " % (self.nombre.title())))
+			self.tiempoLlegada = int_input(self.tiempoLlegada, "\tIngrese Instante De LLegada Del Proceso %s: " % (self.nombre.title()))
+		self.tiempoEjecucion = int_input(self.tiempoEjecucion, "\tIngrese Tiempo De Ejecucion Del Proceso %s: " % (self.nombre.title()))
 
 def ordenardic(dic):
 	"""Esta funcion solo retornara el diccionario ordenador de acuerdo al instante de llegada :D"""
 	return collections.OrderedDict(sorted(dic.items()))
 
+def int_input(inp, message):
+	inp= input(message)
+	while inp.isdigit() != True:
+		inp = input("\tRecuerde Que Solo Deben Ser Valores Enteros\n\t{}".format(message))
+	return int(inp)
+	
 prioridad = Prioridad();
-prioridad.min = int(input("Ingrese Minimo De Prioridad: "))
-prioridad.max = int(input("Ingrese Maximo De Prioridad: "))
-procesos = int(input("Ingrese Cuanto Procesos Deseas Ejecutar: "))
+prioridad.min = int_input(prioridad.min, "Ingrese Minimo De Prioridad: ")
+while prioridad.min >= prioridad.max:
+	prioridad.max = int_input(prioridad.max, "Ingrese Maximo De Prioridad: ")
+procesos = None
+procesos = int_input(procesos, "Ingrese Cuanto Procesos Deseas Ejecutar: ")
 
 cola = {}
 ultimaLlegada = -1	
@@ -123,8 +131,6 @@ for i in range(len(graf["valores"])):
 	plt.bar(ind, invertidos, width, bottom=acum, color='lightblue')
 	acum += np.array(invertidos)	
 
-thismanager = plt.get_current_fig_manager()
-thismanager.window.wm_iconbitmap("ico.ico")		
 plt.ylabel('Tiempo de Ejecucion')
 plt.title('Politica de Planificacion De Procesos: Por prioridad')
 plt.xticks(ind, graf["etiquetas"])
